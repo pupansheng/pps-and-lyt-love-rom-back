@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pps.back.frame.pupansheng.core.authority.security.mapper.SysPermissonDao">
+  <resultMap id="BaseResultMap" type="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="page" jdbcType="VARCHAR" property="page" />
+    <result column="sys_role_id" jdbcType="BIGINT" property="sysRoleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `action`, page, sys_role_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_permisson
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryPermissonByRoleId" resultType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson">
+
+    select
+    <include refid="Base_Column_List" />
+    from sys_permisson
+    where sys_role_id = #{id,jdbcType=BIGINT}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_permisson
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson" useGeneratedKeys="true">
+    insert into sys_permisson (`action`, page, sys_role_id
+      )
+    values (#{action,jdbcType=VARCHAR}, #{page,jdbcType=VARCHAR}, #{sysRoleId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson" useGeneratedKeys="true">
+    insert into sys_permisson
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="action != null">
+        `action`,
+      </if>
+      <if test="page != null">
+        page,
+      </if>
+      <if test="sysRoleId != null">
+        sys_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="page != null">
+        #{page,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleId != null">
+        #{sysRoleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson">
+    update sys_permisson
+    <set>
+      <if test="action != null">
+        `action` = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="page != null">
+        page = #{page,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleId != null">
+        sys_role_id = #{sysRoleId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysPermisson">
+    update sys_permisson
+    set `action` = #{action,jdbcType=VARCHAR},
+      page = #{page,jdbcType=VARCHAR},
+      sys_role_id = #{sysRoleId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

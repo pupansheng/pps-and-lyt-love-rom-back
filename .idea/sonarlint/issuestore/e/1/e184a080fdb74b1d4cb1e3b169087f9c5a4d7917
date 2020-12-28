@@ -1,0 +1,26 @@
+
+M
+java:S1481š"1Remove this unused "loginOutDone" local variable.(Öù‹“ùÿÿÿÿ
+E
+java:S3740…"/Provide the parametrized type for this generic.(çØí{
+Q
+java:S1481”"5Remove this unused "formFailfunction" local variable.(»±—«ùÿÿÿÿ
+H
+java:S1602š",Remove useless curly braces around statement(Öù‹“ùÿÿÿÿ
+`	java:S112h"FDefine and throw a dedicated exception instead of using a generic one.(Ğ¶®Ÿÿÿÿÿÿ
+K
+java:S3740”"/Provide the parametrized type for this generic.(»±—«ùÿÿÿÿ
+@
+java:S5411`"*Use the primitive boolean expression here.(ê¥Ú
+`
+java:S1854”"DRemove this useless assignment to local variable "formFailfunction".(»±—«ùÿÿÿÿ
+\
+java:S1854š"@Remove this useless assignment to local variable "loginOutDone".(Öù‹“ùÿÿÿÿ
+K
+java:S3740€"/Provide the parametrized type for this generic.(ÅÜà±ûÿÿÿÿ
+K
+java:S3740€"/Provide the parametrized type for this generic.(ÅÜà±ûÿÿÿÿ
+E
+java:S3740…"/Provide the parametrized type for this generic.(çØí{
+K
+java:S3740”"/Provide the parametrized type for this generic.(»±—«ùÿÿÿÿ

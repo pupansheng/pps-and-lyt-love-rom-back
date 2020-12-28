@@ -1,0 +1,64 @@
+
+\	java:S112Ï"FDefine and throw a dedicated exception instead of using a generic one.(´»³ë
+D
+java:S1172¨"-Remove this unused method parameter "binder".(¬Ä½î
+R	java:S125‚"<This block of commented-out lines of code should be removed.(·³×¿
+E
+java:S3740F"/Provide the parametrized type for this generic.(®Ğ†Š
+<
+java:S1170)"!Make this final field static too.(“ìÚÙşÿÿÿÿ
+h	java:S116*"SRename this field "ADD_CHAR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Âèš
+F
+java:S3740”"/Provide the parametrized type for this generic.(˜ğ×Ú
+`	java:S112}"FDefine and throw a dedicated exception instead of using a generic one.(–”™ëüÿÿÿÿ
+7
+java:S1170'"!Make this final field static too.(îÈî
+H
+java:S1199L"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ
+J
+java:S3740M"/Provide the parametrized type for this generic.(¼û¥úÿÿÿÿ
+{
+java:S1488À"dImmediately return this expression instead of assigning it to the temporary variable "typeHandlers".(¡É–æ
+m
+java:S1192R"RDefine a constant instead of duplicating this literal "SqlSessionFactory" 4 times.(‘Ì·ÿÿÿÿÿ
+t	java:S116'"_Rename this field "DATASOURCE_DATA_LIST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÈî
+k	java:S116)"QRename this field "SPILIT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ìÚÙşÿÿÿÿ
+=
+java:S1905¢"&Remove this unnecessary cast to "Map".(¶‚„
+;
+java:S1905@"&Remove this unnecessary cast to "Map".(¦½ú
+K
+java:S1611¯"/Remove the parentheses around the "x" parameter(ß–‘€øÿÿÿÿ
+O
+java:S1611¸"8Remove the parentheses around the "driverType" parameter(„¹Ã”
+C
+java:S1602¸",Remove useless curly braces around statement(„¹Ã”
+H
+java:S1602¯",Remove useless curly braces around statement(ß–‘€øÿÿÿÿ
+v	java:S116("\Rename this field "DATASOURCE_PREFIX" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘Ë¡™ıÿÿÿÿ
+F
+java:S3740©"/Provide the parametrized type for this generic.(úŸ Ò
+H
+java:S1611ã"1Remove the parentheses around the "key" parameter(ï¿‡é
+H
+java:S1199>"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ
+p
+java:S1450+"URemove the "binder" field and declare it as a local variable in the relevant methods.(¼õ‡øÿÿÿÿ
+D
+java:S3740@"/Provide the parametrized type for this generic.(¦½ú
+Q
+java:S1117Ÿ":Rename "binder" which hides the field declared at line 43.(ğ©ù
+E
+java:S3740á"/Provide the parametrized type for this generic.(ï©
+<
+java:S1170("!Make this final field static too.(‘Ë¡™ıÿÿÿÿ
+7
+java:S1170*"!Make this final field static too.(Âèš
+H
+java:S1199T"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ
+H
+java:S1199\"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ
+F
+java:S3740â"/Provide the parametrized type for this generic.(âÇÌ•
+K
+java:S3740•"/Provide the parametrized type for this generic.(³À‚ûÿÿÿÿ

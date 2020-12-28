@@ -1,0 +1,8 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(½¸°Ì
+@
+java:S1148%"#Use a logger to log this exception.(Ç’Çê8”ÔñŸé.
+Z
+java:S1854"8Remove this useless assignment to local variable "temp".(ê Õžùÿÿÿÿ8Š¨‘ é.
+K
+java:S1481")Remove this unused "temp" local variable.(ê Õžùÿÿÿÿ8Š¨‘ é.

@@ -1,0 +1,44 @@
+
+i
+java:S1128"IRemove this unused import 'com.qcloud.cos.exception.CosServiceException'.(€Ï±úÿÿÿÿ8ÓÔãšé.
+Y
+java:S1128"9Remove this unused import 'java.io.BufferedOutputStream'.(«èÍôıÿÿÿÿ8ÓÔãšé.
+o
+java:S1128"TRemove this unused import 'com.pps.back.frame.pupansheng.custom.util.FastDFSClient'.(£ùÌ8ÓÔãšé.
+k
+java:S1128"PRemove this unused import 'org.springframework.web.bind.annotation.CrossOrigin'.(º´Ñ†8ÓÔãšé.
+l	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.( ÅÉŠÿÿÿÿÿ8ÓÔãšé.
+J
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8ÓÔãšé.
+j
+java:S1128"ORemove this unused import 'org.springframework.beans.factory.annotation.Value'.(ìø›8ÓÔãšé.
+c
+java:S1128"HRemove this unused import 'com.qcloud.cos.exception.CosClientException'.(”·°›8ÓÔãšé.
+l
+java:S1128"LRemove this unused import 'org.springframework.web.multipart.MultipartFile'.(ôŸœÿÿÿÿÿ8ÓÔãšé.
+n
+java:S1128"SRemove this unused import 'org.springframework.web.bind.annotation.RequestMapping'.(ö»¿ë8ÓÔãšé.
+r
+java:S1128"RRemove this unused import 'org.springframework.web.bind.annotation.RequestMethod'.(Ê™Ğÿûÿÿÿÿ8ÓÔãšé.
+¡
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ü¾Öİıÿÿÿÿ8ó¿Ğ›é.
+K
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ÓÔãšé.
+[
+java:S1128"@Remove this unused import 'io.swagger.annotations.ApiOperation'.(¡šÜ8ÓÔãšé.
+^
+java:S1128"CRemove this unused import 'javax.servlet.http.HttpServletResponse'.(Á¨ïë8ÓÔãšé.
+N
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ÓÔãšé.
+Y
+java:S1128"?Remove this unused import 'com.alibaba.druid.util.StringUtils'.(œ£×O8ÓÔãšé.
+K
+java:S1128"0Remove this unused import 'java.nio.file.Paths'.(áè°¯8ÓÔãšé.
+Q
+java:S1128"1Remove this unused import 'java.io.OutputStream'.(Ó ³ÿÿÿÿÿ8ÓÔãšé.
+K
+java:S1128"0Remove this unused import 'java.nio.file.Files'.(‚ƒü8ÓÔãšé.
+P
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8ÓÔãšé.
+J
+java:S1128"/Remove this unused import 'java.nio.file.Path'.(×²êÂ8ÓÔãšé.

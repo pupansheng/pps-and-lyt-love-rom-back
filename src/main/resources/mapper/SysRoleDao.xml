@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pps.back.frame.pupansheng.core.authority.security.mapper.SysRoleDao">
+  <resultMap id="BaseResultMap" type="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryRoleByUserId" resultType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole">
+
+    select
+    <include refid="Base_Column_List" />
+    from sys_role
+    where user_id = #{id,jdbcType=BIGINT}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole" useGeneratedKeys="true">
+    insert into sys_role (`name`, user_id)
+    values (#{name,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole" useGeneratedKeys="true">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole">
+    update sys_role
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysRole">
+    update sys_role
+    set `name` = #{name,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

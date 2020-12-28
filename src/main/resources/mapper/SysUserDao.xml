@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pps.back.frame.pupansheng.core.authority.security.mapper.SysUserDao">
+  <resultMap id="BaseResultMap" type="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, `password`, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="queryCondition" resultType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    <where>
+
+      <if test="name != null">
+       and `name` = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+       and `password` = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="phone != null">
+      and  phone = #{phone,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser" useGeneratedKeys="true">
+    insert into sys_user (`name`, `password`, phone
+      )
+    values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser" useGeneratedKeys="true">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser">
+    update sys_user
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pps.back.frame.pupansheng.core.authority.security.entity.SysUser">
+    update sys_user
+    set `name` = #{name,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

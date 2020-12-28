@@ -1,0 +1,90 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 20000
+  connection-timeout: 7200
+  servlet:
+    context-path: /pps
+spring:
+  dataSourseList: data-source1        #数据源列表名称 与下面数据源对应  第一个默认为主数据库
+  data-source1:
+    type: com.alibaba.druid.pool.DruidDataSource  #数据源类型
+    database:                                     #数据源基本配置
+      username: root
+      password: pps123
+      driver_class_name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/webmodel?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=GMT%2B8
+    mybatisConfig:
+      type-aliases-ackageList:                       #别名
+
+      mapperXmlLocation:                             #mapper.xml  位置
+        - classpath:mapper/*.xml
+      mapperLocation:                                #mapper位置
+        - com.pps.back.frame.pupansheng.core.authority.security.mapper
+        - com.pps.back.frame.pupansheng.custom.mapper
+  mvc:
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 统一设置日期格式
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+      location: d:/uploadtest
+mybatis:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations:
+    - classpath*:mybatis/mapper/*.xml
+    - classpath*:mybatis/security/mapper/*.xml
+    #configuration:
+  map-underscore-to-camel-case: true    #驼峰命名
+pagehelper:
+  helperDialect: mysql                           #分页插件方言选择
+  reasonable: true                               #合理化参数，设为true时pageNum<=0 时会查第一页， pageNum>pages（超过总数时），会查询最后一页
+  supportMethodsArguments: true
+#security自定义的框架
+mysecurity:
+  permitUrl:                                 #允许不登录就能访问的url
+    - /images/**
+    - /pc/test1/**
+    - /wx/test1/**
+    - /pc/redis/**
+  loginUrl:  /login                  #表单 登录页url
+  logoutUrl: /logout                 #登录退出url
+  openVerifyCode: false              #是否开启验证码登录处理 验证码参数默认：verifyCode
+  validateCodeParam: verifyCode      #会从session里面拿这个参数 作为验证码
+  verifyCodeUrl:  /verifyCode        #获取验证码url
+  failureUrl: /login/error           #关于账户权限发生错误失败跳转的地址  暂时没有用
+  smsMessage: /sms/get/yanzhengma
+  openRequestLog: true               #网络请求是否打印
+  canCrossOrigin: true               #是否生成跨域访问filter  建议生产环境取消
+  openConfigUser: true               #是否开启本地测试用户  若开启 则configUsers不能为空 为一个数组 并且权限固定为ROLE_ADMIN
+  configUser: '[{"username":"admin","password":"123"},{"username":"n1","password":"x1111111"}]'
+  sms:
+     openSms: false
+     smsLoginUrl: /sms/login
+     smsMessage:  /sms/get/yanzhengma #短信验证码获取
+     mobileParameter: phone           #网络请求的电话号码参数
+     codeParameter: code              #网络请求里面的验证码
+     sessionParam:  code              #产生验证码时存到session的参数名
+     sessionPhoneParam: phone         #存到session里面的应该为一个map  这是map的电话号码参数
+     sessionCodeParam:  code          #存到session里面的应该为一个map  这是map的验证码参数
+  jwt:
+      enable: true                   #开启jwt登录  开启后登陆成功后返回前端token  下次带token 可以授权
+      jwtLoginUrl: /jwt/login         #没有用到
+      filter: /jwt/**
+      expire: 604800
+      secret: aHR0cHM6Ly9teS5vc2NoaW5hLm5ldC91LzM2ODE4Njg=
+      headerParam: authorization                 # header 带token的参数名
+
+
+pps:
+  netty:
+    im:
+      enable : true
+      port: 9090
+      websocketPath: /pps

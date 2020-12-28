@@ -1,0 +1,22 @@
+
+J
+java:S3740@"/Provide the parametrized type for this generic.(¯íÄµøÿÿÿÿ
+D
+java:S3740H"/Provide the parametrized type for this generic.(ÆÕœ+
+S
+java:S1155-">Use isEmpty() to check whether the collection is empty or not.(ÏŸº
+T
+java:S1155A">Use isEmpty() to check whether the collection is empty or not.(¡ü‡
+Y
+java:S1155I">Use isEmpty() to check whether the collection is empty or not.(å•ìÌûÿÿÿÿ
+œ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚¿Óóÿÿÿÿÿ
+t	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(êıä÷ÿÿÿÿÿ
+8
+java:S1118"Hide this public constructor.(‚¿Óóÿÿÿÿÿ
+m
+java:S3776$"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ÊúîÍúÿÿÿÿ
+F
+java:S19054"+Remove this unnecessary cast to "String[]".(Œğ¡ûÿÿÿÿ
+d
+java:S4201M"IRemove this unnecessary null check; "instanceof" returns false for nulls.(Ö«–üÿÿÿÿ

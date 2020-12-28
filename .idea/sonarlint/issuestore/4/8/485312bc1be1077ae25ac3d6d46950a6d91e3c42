@@ -1,0 +1,30 @@
+
+Y
+java:S1128"9Remove this unused import 'java.io.ByteArrayInputStream'.(Ëôæ±ûÿÿÿÿ8¡™Œ›é.
+O
+java:S1481"/Remove this unused "bucketName" local variable.(Æ«şøúÿÿÿÿ8ê¤üšé.
+y
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(úƒÑ¹ÿÿÿÿÿ8”‰óšé.
+]
+java:S1128"=Remove this unused import 'jdk.internal.util.xml.impl.Input'.(’ºÑıÿÿÿÿ8Ä›é.
+C
+java:S1148"#Use a logger to log this exception.(³¤¢—øÿÿÿÿ8ñÛ™é.
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ì˜œ8ñÛ™é.
+P
+java:S1751"5Remove this "break" statement or make it conditional.(›ûä·8ñÛ™é.
+y
+java:S1488"^Immediately return this expression instead of assigning it to the temporary variable "result".(Ëü†­8³Ÿ›é.
+^
+java:S1854">Remove this useless assignment to local variable "bucketName".(Æ«şøúÿÿÿÿ8àıšé.
+`	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(’ÿéò8ñÛ™é.
+`	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‡¯Â8ñÛ™é.
+{
+java:S1488"`Immediately return this expression instead of assigning it to the temporary variable "uploadId".(…‚¯¡8šÊıšé.
+ˆ
+java:S1488"hImmediately return this expression instead of assigning it to the temporary variable "uploadPartResult".(öÿ·Ñÿÿÿÿÿ8¸á›é.
+C
+java:S1148"#Use a logger to log this exception.(±ß˜Çøÿÿÿÿ8ñÛ™é.
+h
+java:S1128"HRemove this unused import 'com.qcloud.cos.auth.AnonymousCOSCredentials'.(åï®Ëùÿÿÿÿ8ñÛ™é.
+c
+java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8ñÛ™é.
