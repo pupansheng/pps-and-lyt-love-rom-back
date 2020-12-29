@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @time 2020/8/27 17:07
  */
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/jwt/system")
 public class SystemController {
 
     @Autowired
