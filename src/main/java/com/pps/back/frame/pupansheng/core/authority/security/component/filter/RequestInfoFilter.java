@@ -98,14 +98,14 @@ public class RequestInfoFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
 
-        HttpServletRequest requestWrapper = new RepeatedlyReadRequestWrapper(req);
+      /*  HttpServletRequest requestWrapper = new RepeatedlyReadRequestWrapper(req);
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             // Get request URL.
-            map.put("URL", req.getRequestURL());
-            map.put("Method", req.getMethod());
-            map.put("Protocol",req.getProtocol());
-            map.put("sessionId",req.getSession()!=null?req.getSession().getId():"无session");
+            map.put("URL", requestWrapper.getRequestURL());
+            map.put("Method", requestWrapper.getMethod());
+            map.put("Protocol",requestWrapper.getProtocol());
+            map.put("sessionId",requestWrapper.getSession()!=null?requestWrapper.getSession().getId():"无session");
             // 获取header信息
             logger.info("收到网络请求：------------------------------------------------------------------------------------------------------------------------------------------------");
             log.info("http信息：-------------------------------");
@@ -115,7 +115,7 @@ public class RequestInfoFilter extends OncePerRequestFilter {
             log.info("头信息：-------------------------------");
             List<Map<String,String>> headerList = new ArrayList<>();
             Map<String,String> headerMaps = new HashMap<String,String>();
-            for(Enumeration<String> enu = req.getHeaderNames(); enu.hasMoreElements();){
+            for(Enumeration<String> enu = requestWrapper.getHeaderNames(); enu.hasMoreElements();){
                 String name = enu.nextElement();
                 headerMaps.put(name,req.getHeader(name));
             }
@@ -135,10 +135,10 @@ public class RequestInfoFilter extends OncePerRequestFilter {
             log.info("参数信息：-------------------------------");
             List<Map<String,String>> parameterList = new ArrayList<>();
             Map<String,String> parameterMaps = new HashMap<String,String>();
-            for(Enumeration<String> names = req.getParameterNames();names.hasMoreElements();){
+            for(Enumeration<String> names = requestWrapper.getParameterNames();names.hasMoreElements();){
                 String name = names.nextElement();
 
-                String[] paramValues = req.getParameterValues(name);
+                String[] paramValues = requestWrapper.getParameterValues(name);
                 if (paramValues.length >0) {
                     String paramValue = paramValues[0];
                     if (paramValue.length() != 0) {
@@ -171,7 +171,7 @@ public class RequestInfoFilter extends OncePerRequestFilter {
         }
 
 
-
+*/
         logger.info("--------------------------------------------------------------------------------------------------------------------------------------------");
             filterChain.doFilter(req,response);
 

@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
         String fileName = jsonObject.getString("fileName");
 
-        String s = fileCosUtil.initUploadChunck(null, fileName);
+        String s = fileCosUtil.initUploadChunck(fileName);
 
         return s;
     }

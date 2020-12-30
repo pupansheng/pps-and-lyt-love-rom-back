@@ -10,12 +10,18 @@ import java.util.Map;
 * (UploadRecord)实体类
 *
 * @author default
-* @since 2020-12-29 17:14:59
+* @since 2020-12-30 17:46:17
 */
 public class UploadRecordPo  implements Serializable {
-private static final long serialVersionUID = 436192933832665850L;
+private static final long serialVersionUID = 250150923260118014L;
     
 private String id;
+    
+private String key;
+    
+private String url;
+    
+private Integer userId;
     
 private String fileName;
     
@@ -30,6 +36,30 @@ return id;
 
 public void setId(String id) {
 this.id = id;
+}
+    
+public String getKey() {
+return key;
+}
+
+public void setKey(String key) {
+this.key = key;
+}
+    
+public String getUrl() {
+return url;
+}
+
+public void setUrl(String url) {
+this.url = url;
+}
+    
+public Integer getUserId() {
+return userId;
+}
+
+public void setUserId(Integer userId) {
+this.userId = userId;
 }
     
 public String getFileName() {
@@ -59,6 +89,9 @@ this.optTime = optTime;
     public String toString() {
     return "UploadRecord{" +
                ",id ='" + id + '\'' +
+               ",key ='" + key + '\'' +
+               ",url ='" + url + '\'' +
+               ",userId ='" + userId + '\'' +
                ",fileName ='" + fileName + '\'' +
                ",suffix ='" + suffix + '\'' +
                ",optTime ='" + optTime + '\'' +

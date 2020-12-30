@@ -7,9 +7,10 @@ import java.util.List;
 * (UploadRecord)表数据库访问层
 *
 * @author default
-* @since 2020-12-29 17:15:00
+* @since 2020-12-30 17:46:18
 */
-public interface UploadRecordMapper {
+public interface UploadRecordMapper{
+
 /**
 * 通过ID查询单条数据
 *

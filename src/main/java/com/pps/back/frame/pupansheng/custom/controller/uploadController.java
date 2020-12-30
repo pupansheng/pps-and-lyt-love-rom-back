@@ -4,80 +4,148 @@ import com.alibaba.fastjson.JSONObject;
 import com.pps.back.frame.pupansheng.core.common.model.Result;
 import com.pps.back.frame.pupansheng.custom.config.FileCosUtil;
 import com.pps.back.frame.pupansheng.custom.db.GlobalDb;
+import com.pps.back.frame.pupansheng.custom.entity.ChunckFile;
+import com.pps.back.frame.pupansheng.custom.entity.UploadRecordPo;
+import com.pps.back.frame.pupansheng.custom.mapper.UploadRecordMapper;
 import com.pps.back.frame.pupansheng.custom.service.FileService;
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.AnonymousCOSCredentials;
-import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.http.HttpMethodName;
-import com.qcloud.cos.model.GeneratePresignedUrlRequest;
+import com.qcloud.cos.model.CompleteMultipartUploadResult;
+import com.qcloud.cos.model.PartETag;
 import com.qcloud.cos.model.PartListing;
-import com.qcloud.cos.region.Region;
+import com.qcloud.cos.model.UploadPartResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
-import java.net.URL;
-import java.util.UUID;
+import java.io.IOException;
+import java.util.*;
 
-@RestController("/jwt/file/")
+@RestController
+@RequestMapping("/jwt/file")
+@Slf4j
 public class uploadController extends BaseController {
 
-
+    private Object lock=new Object();
     @Autowired
     FileCosUtil fileCosUtil;
     @Autowired
     GlobalDb globalDb;
     @Autowired
     FileService fileService;
+    @Autowired
+    UploadRecordMapper uploadRecordMapper;
+
+    @PostMapping("chunck/process")
+    public Result searchProcess(@RequestBody JSONObject jsonObject){
+        String key=jsonObject.getString("key");
+        String uploadId=jsonObject.getString("uploadId");
+        List<PartETag> partETags = fileCosUtil.searchChunckComplete(key, uploadId);
+        return Result.ok(partETags.size());
+
+    }
+    @PostMapping("chunck/complete")
+    public Result complete(@RequestBody JSONObject jsonObject){
+
+        String key=jsonObject.getString("key");
+        String uploadId=jsonObject.getString("uploadId");
+        ChunckFile value = (ChunckFile) globalDb.getValue(uploadId);
+        value.complete(fileCosUtil);
+        String url = fileCosUtil.getUrl(key);
+
+        globalDb.deleteValue(uploadId);
+        globalDb.deleteValue(value.getSign());
 
 
 
-    @PostMapping
-    public void uploadFile(MultipartFile file,Integer pageNumer,String fileName){
+        String name = value.getName();
+        UploadRecordPo uploadRecordPo =new UploadRecordPo() ;
+        uploadRecordPo.setId(UUID.randomUUID().toString());
+        uploadRecordPo.setFileName(name);
+        uploadRecordPo.setOptTime(new Date());
+        String substring = name.substring(name.lastIndexOf(".") + 1);
+        uploadRecordPo.setSuffix(substring);
+        uploadRecordPo.setUrl(url);
+        uploadRecordPo.setUserId(jsonObject.getIntValue("userId"));
+        uploadRecordPo.setKey(key);
+        uploadRecordMapper.insert(uploadRecordPo);
 
-        String loginUerName = getLoginUerName();
-        String k=loginUerName+":"+fileName;
-        Object s = globalDb.getValue(k);
-        //第一页
-        if(pageNumer==1){
-            if(s!=null){
-                //说明之前已经上传过 还没有上传完 搜索模块
-                PartListing partListing = fileCosUtil.searchChunck(null, fileName, (String) s);
-                System.out.println(partListing);
-            }else {
-                String uoloadId = fileCosUtil.initUploadChunck(null, fileName);
-                globalDb.putValue(k,uoloadId);
-            }
 
+
+        return Result.ok(url);
+    }
+
+
+    @PostMapping("/chunck/upload")
+    public Result uploadFile(MultipartFile file,Integer pageNumber,Integer size,String key,String uploadId){
+        ChunckFile value = (ChunckFile) globalDb.getValue(uploadId);
+        if(value==null){
+            throw  new RuntimeException("上传终止");
         }
+        List<PartETag> partETags = value.getPartETags();
+        boolean isHasUpload=  partETags.stream().anyMatch(p->{
+            if(p.getPartNumber()==pageNumber){
+                return  true;
+            }
+            return false;
+        });
+       if(isHasUpload){
+          return Result.ok("已上传");
+       }
 
+        try {
+            UploadPartResult uploadPartResult = fileCosUtil.uploadFileChunck(uploadId, pageNumber, key,size, file.getInputStream());
+            PartETag partETag = uploadPartResult.getPartETag();
+            value.addPartEndTag(partETag);
+            return Result.ok("已上传");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.err("上传发生错误 已取消");
+        }
 
 
     }
     @PostMapping("/chunck/init")
     @ResponseBody
     public Result initChunckFile(@RequestBody JSONObject jsonObject){
-        String fileName = jsonObject.getString("fileName");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username= (String) authentication.getPrincipal();
-        String k=username+":"+fileName;
-        Object s = globalDb.getValue(k);
-        if(s!=null){
-            //说明之前已经上传过 还没有上传完 搜索模块
-            PartListing partListing = fileCosUtil.searchChunck(null, fileName, (String) s);
-            System.out.println(partListing);
-        }else {
-            String uoloadId = fileCosUtil.initUploadChunck(null, fileName);
-            return Result.ok(uoloadId);
+        Map map=new HashMap();
+        String sign = jsonObject.getString("sign");
+        String name = jsonObject.getString("name");
+        String user = jsonObject.getString("user");
+        String userId = jsonObject.getString("userId");
+        Integer pageSize = jsonObject.getInteger("pageSize");
+        Object value = globalDb.getValue(sign);
+        if(value==null){
+            //todo 说明此前没有传过这个文件对象
+            //创建文件key
+            String key=user+"/"+userId+"/"+name;
+            log.info("创建文件{}的key：{}",name,key);
+            String uploadId = fileCosUtil.initUploadChunck(key);
+            log.info("创建文件{}的uploadId：{}",name,uploadId);
+            ChunckFile chunckFile=new ChunckFile();
+            chunckFile.setKey(key);
+            chunckFile.setUploadId(uploadId);
+            chunckFile.setName(name);
+            chunckFile.setPageSize(pageSize);
+            chunckFile.setSign(sign);
+            globalDb.putValue(sign,uploadId);
+            globalDb.putValue(uploadId,chunckFile);
+            map.put("hasUpload",false);
+            map.put("uploadId",uploadId);
+            map.put("pageNumber",1);
+            map.put("key",key);
+        }else {//已上传过 但是还未上传完毕
+
+            String uploadID=(String)value;
+            ChunckFile chunckFile= (ChunckFile)globalDb.getValue(uploadID);
+            String key=chunckFile.getKey();
+            map.put("uploadId",uploadID);
+            map.put("key",key);
+            map.put("pageNumber",1);
+            map.put("hasUpload",true);
         }
-      return  Result.ok(null);
+
+        return  Result.ok(map);
     }
 
 }

@@ -4,6 +4,9 @@
 
     <resultMap type="com.pps.back.frame.pupansheng.custom.entity.UploadRecordPo" id="UploadRecordMap">
                     <result property="id" column="id" jdbcType="VARCHAR"/>
+                    <result property="key" column="key2" jdbcType="VARCHAR"/>
+                    <result property="url" column="url" jdbcType="VARCHAR"/>
+                    <result property="userId" column="user_id" jdbcType="INTEGER"/>
                     <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
                     <result property="suffix" column="suffix" jdbcType="VARCHAR"/>
                     <result property="optTime" column="opt_time" jdbcType="TIMESTAMP"/>
@@ -12,19 +15,28 @@
     <!--查询单个-->
     <select id="queryById" resultMap="UploadRecordMap">
         select
-          id, file_name, suffix, opt_time
-        from pps-lyt-room.upload_record
+          id, key2, url, user_id, file_name, suffix, opt_time
+        from upload_record
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="UploadRecordMap">
         select
-        id, file_name, suffix, opt_time
-        from pps-lyt-room.upload_record
+        id, key2, url, user_id, file_name, suffix, opt_time
+        from upload_record
         <where>
                             <if test="id != null and id != ''">
                     and id = #{id,jdbcType=VARCHAR}
+                </if>
+                            <if test="key != null and key != ''">
+                    and key2 = #{key,jdbcType=VARCHAR}
+                </if>
+                            <if test="url != null and url != ''">
+                    and url = #{url,jdbcType=VARCHAR}
+                </if>
+                            <if test="userId != null">
+                    and user_id = #{userId,jdbcType=INTEGER}
                 </if>
                             <if test="fileName != null and fileName != ''">
                     and file_name = #{fileName,jdbcType=VARCHAR}
@@ -45,14 +57,23 @@
     
       <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into pps-lyt-room.upload_record(id,file_name, suffix, opt_time)
-        values (#{id,jdbcType=VARCHAR},#{fileName,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, #{optTime,jdbcType=TIMESTAMP})
+        insert into upload_record(id,key2, url, user_id, file_name, suffix, opt_time)
+        values (#{id,jdbcType=VARCHAR},#{key,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, #{optTime,jdbcType=TIMESTAMP})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update pps-lyt-room.upload_record
+        update upload_record
         <set>
+                            <if test="key != null and key != ''">
+                    key2 = #{key},
+                </if>
+                            <if test="url != null and url != ''">
+                    url = #{url},
+                </if>
+                            <if test="userId != null">
+                    user_id = #{userId},
+                </if>
                             <if test="fileName != null and fileName != ''">
                     file_name = #{fileName},
                 </if>
@@ -68,11 +89,11 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from pps-lyt-room.upload_record where id = #{id,jdbcType=VARCHAR}
+        delete from upload_record where id = #{id,jdbcType=VARCHAR}
     </delete>
      <!--通过主键删除 逻辑删除-->
      <update id="deleteByIdWithFalse">
-       update pps-lyt-room.upload_record
+       update upload_record
         set flag=0
         where id = #{id}
      </update>

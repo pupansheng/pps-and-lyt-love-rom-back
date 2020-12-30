@@ -124,15 +124,26 @@ public class FileCosUtil {
         return urls;
 
     }
-
     /**
-     * 查询分块上传
+     * 查询正在分块上传的块
      */
-    public  PartListing searchChunck( String bucketName2,String key,String uploadId){
+    public  MultipartUploadListing searchChunck(){
+        // Bucket的命名格式为 BucketName-APPID ，此处填写的存储桶名称必须为此格式
+        String bucketName = defalutBucketElement.getName();
+        ListMultipartUploadsRequest listMultipartUploadsRequest = new ListMultipartUploadsRequest(bucketName);
+        listMultipartUploadsRequest.setDelimiter("/");
+        listMultipartUploadsRequest.setMaxUploads(100);
+        listMultipartUploadsRequest.setPrefix("");
+        listMultipartUploadsRequest.setEncodingType("url");
+        MultipartUploadListing multipartUploadListing = cosClient.listMultipartUploads(listMultipartUploadsRequest);
+        return  multipartUploadListing;
 
+    }
+
+    public  List<PartETag> searchChunckComplete(String key,String uploadId){
         // ListPart 用于在 complete 分块上传前或者 abort 分块上传前获取 uploadId 对应的已上传的分块信息, 可以用来构造 partEtags
         List<PartETag> partETags = new ArrayList<PartETag>();
-        String bucketName =bucketName2;
+        String bucketName =defalutBucketElement.getName();
         ListPartsRequest listPartsRequest = new ListPartsRequest(bucketName, key, uploadId);
         PartListing partListing = null;
         do {
@@ -143,42 +154,52 @@ public class FileCosUtil {
             listPartsRequest.setPartNumberMarker(partListing.getNextPartNumberMarker());
         } while (partListing.isTruncated());
 
-        return partListing;
+        return  partETags;
     }
 
-    public String initUploadChunck(String bucketName2,String key){
+
+    public String initUploadChunck(String key){
 
         // Bucket的命名格式为 BucketName-APPID
-        if(bucketName2==null){
-            String bucketName = defalutBucketElement.getName();
-        }
-        String bucketName=bucketName2;
+        String bucketName=defalutBucketElement.getName();
         InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, key);
         InitiateMultipartUploadResult initResponse = cosClient.initiateMultipartUpload(initRequest);
         String  uploadId = initResponse.getUploadId();
         return  uploadId;
     }
 
-    public UploadPartResult uploadFileChunck(String  uploadId,Integer partNumber,  String bucketName,String key,InputStream inputStream){
+
+
+    public UploadPartResult uploadFileChunck(String  uploadId,Integer partNumber,String key,int size,InputStream inputStream){
         // 上传分块, 最多10000个分块, 分块大小支持为1M - 5G。
         // 分块大小设置为4M。如果总计 n 个分块, 则 1 ~ n-1 的分块大小一致，最后一块小于等于前面的分块大小。
         // partStream 代表 part 数据的输入流, 流长度为 partSize
-        UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucketName).
-                withUploadId(uploadId).withKey(key).withPartNumber(partNumber).
+        UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(defalutBucketElement.getName()).
+                withUploadId(uploadId).withKey(key).withPartNumber(partNumber).withPartSize(size).
                 withInputStream(inputStream);
         UploadPartResult uploadPartResult = cosClient.uploadPart(uploadRequest);
         return  uploadPartResult;
 
     }
-    public CompleteMultipartUploadResult compeleteChunckUpload(  String bucketName,String key,String uploadId,List<PartETag> partetag){
 
+
+    public CompleteMultipartUploadResult compeleteChunckUpload(String key,String uploadId,List<PartETag> partetag){
         // complete 完成分块上传.
+        String bucketName=defalutBucketElement.getName();
         CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, key, uploadId,partetag);
         CompleteMultipartUploadResult result = cosClient.completeMultipartUpload(compRequest);
-
         return  result;
     }
 
+
+
+    public void  cancerUpload(String key,String uploadId){
+
+        String bucketName = defalutBucketElement.getName();
+        AbortMultipartUploadRequest abortMultipartUploadRequest = new AbortMultipartUploadRequest(bucketName, key, uploadId);
+        cosClient.abortMultipartUpload(abortMultipartUploadRequest);
+
+    }
 
 
 }
