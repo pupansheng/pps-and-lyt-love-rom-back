@@ -18,4 +18,8 @@ public class BaseController {
         return username;
     }
 
+    public String getSuffix(String name){
+        return name.substring(name.lastIndexOf(".")+1);
+    }
+
 }

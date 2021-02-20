@@ -1,29 +1,29 @@
 
-S	java:S106:"9Replace this use of System.out or System.err by a logger.(Ü™«Ûøÿÿÿÿ
-e
-java:S1128"CRemove this unused import 'java.util.concurrent.ConcurrentHashMap'.(ÓŠÓøúÿÿÿÿ8â¸Ü–é.
-£
-java:S1186i"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(çéĞÂüÿÿÿÿ8íÀä–é.
-L
-java:S3740c"/Provide the parametrized type for this generic.(‚ù·¼8íÀä–é.
-J	java:S108H")Either remove or fill this block of code.(—Ú™Îûÿÿÿÿ8íÀä–é.
-O
-java:S1135K"2Complete the task associated to this TODO comment.(ïç‡Ğ8íÀä–é.
+j
+java:S1128"MRemove this unused import 'org.springframework.security.core.Authentication'.(ñıÓ“8úÅÙªí.
+f
+java:S2583}"DChange this condition so that it does not always evaluate to "false"(—Ú™Îûÿÿÿÿ8Îêç«í.
+y
+java:S1128"\Remove this unused import 'org.springframework.security.core.context.SecurityContextHolder'.(ŒÄæë8úÅÙªí.
+P
+java:S1135€"2Complete the task associated to this TODO comment.(ïç‡Ğ8Îêç«í.
+M
+java:S3740—"/Provide the parametrized type for this generic.(‚ù·¼8Îêç«í.
+¤
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(çéĞÂüÿÿÿÿ8Îêç«í.
+¤
+java:S1319)"†The type of the "LOGIN_USER" object should be an interface such as "ConcurrentMap" rather than the implementation "ConcurrentHashMap".(û’ç·8úÅÙªí.
 }
-java:S3923H"[Remove this conditional structure or edit its code blocks so that they're not all the same.(—Ú™Îûÿÿÿÿ8íÀä–é.
-S
-java:S1854@"6Remove this useless assignment to local variable "to".(…‰×›8ò¿ß–é.
+java:S3923}"[Remove this conditional structure or edit its code blocks so that they're not all the same.(—Ú™Îûÿÿÿÿ8Îêç«í.
 T
-java:S1135G"2Complete the task associated to this TODO comment.(á…øïÿÿÿÿÿ8íÀä–é.
-E
-java:S1481c"(Remove this unused "map" local variable.(‚ù·¼8çå–é.
-U	java:S106b"9Replace this use of System.out or System.err by a logger.(ò‘ı8íÀä–é.
-U	java:S106("9Replace this use of System.out or System.err by a logger.(¢ª£»8”‚Ş–é.
-N	java:S106="9Replace this use of System.out or System.err by a logger.(´¿£İ
-T
-java:S1854c"7Remove this useless assignment to local variable "map".(‚ù·¼8çå–é.
-N	java:S1068"9Replace this use of System.out or System.err by a logger.(¡ĞÑ
-S	java:S1069"9Replace this use of System.out or System.err by a logger.(™ùÉ»øÿÿÿÿ
-N	java:S1060"9Replace this use of System.out or System.err by a logger.(É‚ñ±
-Z	java:S106!"9Replace this use of System.out or System.err by a logger.(”ßÓîûÿÿÿÿ8ª§İ–é.
->	java:S108A")Either remove or fill this block of code.(Ç¿½ú
+java:S1135|"2Complete the task associated to this TODO comment.(á…øïÿÿÿÿÿ8Îêç«í.
+`
+java:S1155<">Use isEmpty() to check whether the collection is empty or not.(ËÉÉšúÿÿÿÿ8úÅÙªí.
+J	java:S108}")Either remove or fill this block of code.(—Ú™Îûÿÿÿÿ8Îêç«í.
+F
+java:S1481—"(Remove this unused "map" local variable.(‚ù·¼8Îêç«í.
+U
+java:S1854—"7Remove this useless assignment to local variable "map".(‚ù·¼8Îêç«í.
+U	java:S106H"9Replace this use of System.out or System.err by a logger.(¢ª£»8úÅÙªí.
+:
+java:S2386)"Make this member "protected".(û’ç·8úÅÙªí.

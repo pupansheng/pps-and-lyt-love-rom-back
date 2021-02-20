@@ -1,17 +1,17 @@
 
-Y
-java:S1128"9Remove this unused import 'com.qcloud.cos.region.Region'.(шЩЉШюяяяя8УФгљй.
-c
-java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚о‰Ю8УФгљй.
-S
-java:S1128"8Remove this unused import 'com.qcloud.cos.ClientConfig'.(л¬ЮЕ8УФгљй.
-_
-java:S1128"DRemove this unused import 'com.qcloud.cos.auth.BasicCOSCredentials'.(¬яѕ±8УФгљй.
-s
-java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(ЎћёОщяяяя8УФгљй.
-Z
-java:S1128"?Remove this unused import 'com.qcloud.cos.auth.COSCredentials'.(ЈЯКІ8УФгљй.
-`
-java:S1128"ERemove this unused import 'org.springframework.core.env.Environment'.(№‡Ё№8УФгљй.
+[
+java:S1128"9Remove this unused import 'com.qcloud.cos.region.Region'.(шЩЉШюяяяя8УФгљй.
+\
+java:S1128"?Remove this unused import 'com.qcloud.cos.auth.COSCredentials'.(ЈЯКІ8УФгљй.
+b
+java:S1128"ERemove this unused import 'org.springframework.core.env.Environment'.(№‡Ё№8УФгљй.
+u
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(ЎћёОщяяяя8УФгљй.
 U
-java:S1128"5Remove this unused import 'com.qcloud.cos.COSClient'.(ЛіЖЗщяяяя8УФгљй.
+java:S1128"8Remove this unused import 'com.qcloud.cos.ClientConfig'.(л¬ЮЕ8УФгљй.
+e
+java:S1128	"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚о‰Ю8УФгљй.
+W
+java:S1128"5Remove this unused import 'com.qcloud.cos.COSClient'.(ЛіЖЗщяяяя8УФгљй.
+a
+java:S1128"DRemove this unused import 'com.qcloud.cos.auth.BasicCOSCredentials'.(¬яѕ±8УФгљй.

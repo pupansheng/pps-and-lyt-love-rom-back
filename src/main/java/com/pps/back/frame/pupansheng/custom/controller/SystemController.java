@@ -10,6 +10,8 @@ import com.pps.back.frame.pupansheng.core.authority.security.mapper.SysUserDao;
 import com.pps.back.frame.pupansheng.core.authority.security.property.MySecurityProperty;
 import com.pps.back.frame.pupansheng.core.common.model.Result;
 import com.pps.back.frame.pupansheng.core.common.util.ValidateUtil;
+import com.pps.back.frame.pupansheng.custom.entity.UserInfoPo;
+import com.pps.back.frame.pupansheng.custom.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +41,8 @@ public class SystemController {
     SysUserDao sysUserDao;
     @Autowired
     MySecurityProperty mySecurityProperty;
+    @Autowired
+    UserInfoMapper userInfoMapper;
 
     @RequestMapping("/getLoginInfo")//登陆获得自己登录信息
     public Result getLoginInfo(){
@@ -81,8 +85,19 @@ public class SystemController {
             sysPermissons.addAll(sysPermissons1);
         });
         info.put("permission",sysPermissons);
+        UserInfoPo userInfoPo =new UserInfoPo() ;
+        userInfoPo.setUserId(sysUser1.getId().intValue());
+        List<UserInfoPo> userInfoPos = userInfoMapper.queryAll(userInfoPo);
+        if(userInfoPos.size()>0){
+           info.put("userInfoExt",userInfoPos.get(0));
+        }else {
+            info.put("userInfoExt",userInfoPo);
+        }
         return  Result.ok(info);
     }
+
+
+
 
 
 }

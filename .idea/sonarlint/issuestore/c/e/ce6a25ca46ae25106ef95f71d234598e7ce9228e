@@ -1,7 +1,13 @@
 
-E
-java:S3740:"/Provide the parametrized type for this generic.(ˆ÷­Š
+È
+java:S1130/"¥Remove the declaration of thrown exception 'com.pps.back.frame.pupansheng.core.authority.security.component.exception.ServiceException' which is a runtime exception.(ñÕıÒøÿÿÿÿ8”§»Äê.
 G
 java:S1602a",Remove useless curly braces around statement(××Ÿûÿÿÿÿ
+E
+java:S3740:"/Provide the parametrized type for this generic.(ˆ÷­Š
+L
+java:S54114"*Use the primitive boolean expression here.(–É¼Şÿÿÿÿÿ8”§»Äê.
 J
 java:S3740;"/Provide the parametrized type for this generic.(ï¼É«ÿÿÿÿÿ
+[
+java:S1155Q">Use isEmpty() to check whether the collection is empty or not.(Âò8”§»Äê.

@@ -5,6 +5,7 @@ import com.qcloud.cos.model.CompleteMultipartUploadResult;
 import com.qcloud.cos.model.PartETag;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import property.UploadResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +23,30 @@ public class ChunckFile {
     private String uploadId;
     private String sign;
     private Integer pageSize;
-    private List<PartETag> partETags=new ArrayList();
     private volatile  boolean isComplete=false;
-    public synchronized void addPartEndTag(PartETag partETag) {
-        partETags.add(partETag);
-    }
-    public synchronized  List<PartETag> getPartETags(){
-        return  partETags;
-    }
-    public synchronized  int getPartHasUploadSize(){
-        return  partETags.size();
-    }
-    public synchronized boolean isComplte(){
-        return  partETags.size()==pageSize;
-    }
+    private List<UploadResult> uploadResults=new ArrayList<>();
+
     public synchronized void complete(FileCosUtil fileCosUtil){
+
         if(!isComplete&&fileCosUtil.searchChunckComplete(key,uploadId).size()==pageSize) {
-            log.info("分块上传已经完毕 开始合成");
-            CompleteMultipartUploadResult completeMultipartUploadResult = fileCosUtil.compeleteChunckUpload(key, uploadId, partETags);
-            log.info("合成完毕！" + completeMultipartUploadResult);
+
+
             isComplete=true;
         }
+    }
+   public synchronized void   add(UploadResult uploadResult){
+        uploadResults.add(uploadResult);
+   }
+    public synchronized   List<UploadResult> getUploadResults() {
+        return uploadResults;
+    }
+
+    public synchronized void  setUploadResults(List<UploadResult> uploadResults) {
+        this.uploadResults = uploadResults;
+    }
+
+    public synchronized int getHasUploadSize(){
+        return  this.uploadResults.size();
     }
 
     public String getKey() {
@@ -85,14 +89,10 @@ public class ChunckFile {
         this.pageSize = pageSize;
     }
 
-    public void setPartETags(List<PartETag> partETags) {
-        this.partETags = partETags;
-    }
 
     public boolean isComplete() {
         return isComplete;
     }
-
     public void setComplete(boolean complete) {
         isComplete = complete;
     }

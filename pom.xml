@@ -146,7 +146,41 @@
             <groupId>com.pps.im</groupId>
             <artifactId>springboot-netty-im-pps-starter</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>netty-all</artifactId>
+                    <groupId>io.netty</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.45.Final</version>
+        </dependency>
+        <!--pps-fastsfs-stater-->
+        <dependency>
+            <groupId>com.pps</groupId>
+            <artifactId>springboot-fastdfs-pps-starter</artifactId>
+            <version>1.29-SNAPSHOT</version>
+        </dependency>
+
+
+        <!--爬虫使用-->
+        <!-- selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.44.0</version>
+        </dependency>
+        <!-- phantomjsdriver(selenium webdriver 第三方支持) -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+
 
 
 

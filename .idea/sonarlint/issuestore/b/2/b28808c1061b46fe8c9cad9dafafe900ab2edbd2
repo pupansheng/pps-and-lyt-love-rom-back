@@ -1,7 +1,0 @@
-
-N	java:S106"9Replace this use of System.out or System.err by a logger.(‡­™Ä
-y
-java:S1488/"^Immediately return this expression instead of assigning it to the temporary variable "result".(æÕ×Óûÿÿÿÿ
-y
-java:S1488G"^Immediately return this expression instead of assigning it to the temporary variable "result".(ÔôÊÔùÿÿÿÿ
->	java:S108")Either remove or fill this block of code.(å¥ž‡

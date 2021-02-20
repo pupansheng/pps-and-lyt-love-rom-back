@@ -2,20 +2,19 @@ package com.pps.back.frame.pupansheng.custom.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pps.back.frame.pupansheng.core.common.model.Result;
-import com.pps.back.frame.pupansheng.custom.config.FileCosUtil;
 import com.pps.back.frame.pupansheng.custom.db.GlobalDb;
 import com.pps.back.frame.pupansheng.custom.entity.ChunckFile;
 import com.pps.back.frame.pupansheng.custom.entity.UploadRecordPo;
 import com.pps.back.frame.pupansheng.custom.mapper.UploadRecordMapper;
 import com.pps.back.frame.pupansheng.custom.service.FileService;
-import com.qcloud.cos.model.CompleteMultipartUploadResult;
-import com.qcloud.cos.model.PartETag;
-import com.qcloud.cos.model.PartListing;
-import com.qcloud.cos.model.UploadPartResult;
+import exception.ChunckInitException;
 import lombok.extern.slf4j.Slf4j;
+import org.csource.common.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import property.UploadResult;
+import util.FastdfsUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,65 +24,55 @@ import java.util.*;
 @Slf4j
 public class uploadController extends BaseController {
 
-    private Object lock=new Object();
-    @Autowired
-    FileCosUtil fileCosUtil;
+
     @Autowired
     GlobalDb globalDb;
     @Autowired
     FileService fileService;
     @Autowired
     UploadRecordMapper uploadRecordMapper;
+    @Autowired
+    FastdfsUtil fastdfsUtil;
 
     @PostMapping("chunck/process")
     public Result searchProcess(@RequestBody JSONObject jsonObject){
-        String key=jsonObject.getString("key");
-        String uploadId=jsonObject.getString("uploadId");
-        List<PartETag> partETags = fileCosUtil.searchChunckComplete(key, uploadId);
-        return Result.ok(partETags.size());
-
-    }
-    @PostMapping("chunck/complete")
-    public Result complete(@RequestBody JSONObject jsonObject){
-
-        String key=jsonObject.getString("key");
         String uploadId=jsonObject.getString("uploadId");
         ChunckFile value = (ChunckFile) globalDb.getValue(uploadId);
-        value.complete(fileCosUtil);
-        String url = fileCosUtil.getUrl(key);
-
-        globalDb.deleteValue(uploadId);
-        globalDb.deleteValue(value.getSign());
-
-
-
-        String name = value.getName();
-        UploadRecordPo uploadRecordPo =new UploadRecordPo() ;
-        uploadRecordPo.setId(UUID.randomUUID().toString());
-        uploadRecordPo.setFileName(name);
-        uploadRecordPo.setOptTime(new Date());
-        String substring = name.substring(name.lastIndexOf(".") + 1);
-        uploadRecordPo.setSuffix(substring);
-        uploadRecordPo.setUrl(url);
-        uploadRecordPo.setUserId(jsonObject.getIntValue("userId"));
-        uploadRecordPo.setKey(key);
-        uploadRecordMapper.insert(uploadRecordPo);
-
-
-
-        return Result.ok(url);
+        return Result.ok(value.getHasUploadSize());
+    }
+    @PostMapping("chunck/complete")
+    public Result complete(@RequestBody JSONObject jsonObject) throws IOException, MyException {
+        String uploadId=jsonObject.getString("uploadId");
+        ChunckFile value = (ChunckFile) globalDb.getValue(uploadId);
+        try {
+            List<UploadResult> uploadResults = value.getUploadResults();
+            String url= uploadResults.get(0).getUrl();
+            UploadRecordPo uploadRecordPo = new UploadRecordPo();
+            uploadRecordPo.setKey(uploadResults.get(0).getFileId());
+            uploadRecordPo.setUrl(url);
+            uploadRecordPo.setSuffix(value.getName().substring(value.getName().lastIndexOf(".")+1));
+            uploadRecordPo.setOptTime(new Date());
+            uploadRecordPo.setId(UUID.randomUUID().toString());
+            uploadRecordMapper.insert(uploadRecordPo);
+            return Result.ok(url);
+        } catch (Exception e){
+            globalDb.deleteValue(uploadId);
+            globalDb.deleteValue(value.getSign());
+            fastdfsUtil.deleteFile(uploadId);
+            throw  new RuntimeException(e);
+        }
     }
 
 
     @PostMapping("/chunck/upload")
-    public Result uploadFile(MultipartFile file,Integer pageNumber,Integer size,String key,String uploadId){
+    public synchronized Result uploadFile(MultipartFile file,Integer pageNumber,String uploadId){
         ChunckFile value = (ChunckFile) globalDb.getValue(uploadId);
         if(value==null){
             throw  new RuntimeException("上传终止");
         }
-        List<PartETag> partETags = value.getPartETags();
-        boolean isHasUpload=  partETags.stream().anyMatch(p->{
-            if(p.getPartNumber()==pageNumber){
+        List<UploadResult> uploadResults = value.getUploadResults();
+        boolean isHasUpload=  uploadResults.stream().anyMatch(p->{
+            if(p.getPageNumber()==pageNumber){
                 return  true;
             }
             return false;
@@ -91,23 +80,19 @@ public class uploadController extends BaseController {
        if(isHasUpload){
           return Result.ok("已上传");
        }
-
         try {
-            UploadPartResult uploadPartResult = fileCosUtil.uploadFileChunck(uploadId, pageNumber, key,size, file.getInputStream());
-            PartETag partETag = uploadPartResult.getPartETag();
-            value.addPartEndTag(partETag);
+            fastdfsUtil.chunckUpload(value.getUploadId(),file.getBytes(),pageNumber,value.getPageSize(),(t)->{
+                value.add(t);
+            });
             return Result.ok("已上传");
-
         } catch (Exception e) {
             e.printStackTrace();
             return Result.err("上传发生错误 已取消");
         }
-
-
     }
     @PostMapping("/chunck/init")
     @ResponseBody
-    public Result initChunckFile(@RequestBody JSONObject jsonObject){
+    public Result initChunckFile(@RequestBody JSONObject jsonObject) throws ChunckInitException {
         Map map=new HashMap();
         String sign = jsonObject.getString("sign");
         String name = jsonObject.getString("name");
@@ -120,7 +105,7 @@ public class uploadController extends BaseController {
             //创建文件key
             String key=user+"/"+userId+"/"+name;
             log.info("创建文件{}的key：{}",name,key);
-            String uploadId = fileCosUtil.initUploadChunck(key);
+            String uploadId = fastdfsUtil.init_chunck(name,map);
             log.info("创建文件{}的uploadId：{}",name,uploadId);
             ChunckFile chunckFile=new ChunckFile();
             chunckFile.setKey(key);
@@ -147,5 +132,11 @@ public class uploadController extends BaseController {
 
         return  Result.ok(map);
     }
+    @PostMapping("/simple/upload")
+    @ResponseBody
+    public Result uploadFileSimple(MultipartFile file) throws IOException {
 
+        UploadResult uploadResult = fastdfsUtil.uploadFile(file.getInputStream(), file.getOriginalFilename(), new HashMap<>());
+        return  Result.ok(uploadResult.getUrl());
+    }
 }

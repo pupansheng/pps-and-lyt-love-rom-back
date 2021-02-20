@@ -1,11 +1,13 @@
 
-J
-java:S5411"*Use the primitive boolean expression here.(ñ…ºﬁˇˇˇˇˇ8”‘„öÈ.
-O
-java:S3740"/Provide the parametrized type for this generic.(§ï©Ûˇˇˇˇˇ8”‘„öÈ.
-O
-java:S3740"/Provide the parametrized type for this generic.(Ôº…´ˇˇˇˇˇ8”‘„öÈ.
-J
-java:S3740"/Provide the parametrized type for this generic.( ¿À§8”‘„öÈ.
-X
-java:S3752">Add a "method" parameter to this "@RequestMapping" annotation.(¿ı√S8”‘„öÈ.
+Q
+java:S37403"/Provide the parametrized type for this generic.(§ï©Ûˇˇˇˇˇ8Ô‚Ç∆Ú.
+Q
+java:S37407"/Provide the parametrized type for this generic.(Ôº…´ˇˇˇˇˇ8Ô‚Ç∆Ú.
+`
+java:S1155[">Use isEmpty() to check whether the collection is empty or not.(À……ö˙ˇˇˇˇ8Ô‚Ç∆Ú.
+L
+java:S54114"*Use the primitive boolean expression here.(ñ…ºﬁˇˇˇˇˇ8Ô‚Ç∆Ú.
+L
+java:S37406"/Provide the parametrized type for this generic.( ¿À§8Ô‚Ç∆Ú.
+Z
+java:S3752/">Add a "method" parameter to this "@RequestMapping" annotation.(¿ı√S8Ô‚Ç∆Ú.

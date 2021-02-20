@@ -1,6 +1,8 @@
 package com.pps.back.frame.pupansheng;
 
 import com.pps.back.frame.pupansheng.core.datasource.MyBatisDataSourceProcessor;
+
+import com.pps.back.frame.pupansheng.core.http.annoation.EnableHttpMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @Import(MyBatisDataSourceProcessor.class)
 @EnableTransactionManagement
-
+@EnableHttpMapper(basePackage = {"com.pps.back.frame.pupansheng.custom.httpmapper"})
 //@EnableMutilDbTranactionManagement
 public class PupanshengApplication {
 

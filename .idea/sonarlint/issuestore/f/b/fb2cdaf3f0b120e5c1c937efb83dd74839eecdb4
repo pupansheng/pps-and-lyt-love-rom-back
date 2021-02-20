@@ -1,23 +1,23 @@
 
-U
-java:S1161q":Add the "@Override" annotation above this method signature(‘£ß—ûÿÿÿÿ
-h
-java:S1192–"RDefine a constant instead of duplicating this literal "sqlSessionFactory" 3 times.(ÒèÁU
-E
-java:S3740}"/Provide the parametrized type for this generic.(ØãÉ
-Q
-java:S1161¾":Add the "@Override" annotation above this method signature(¤ë¿²
-E
-java:S3740N"/Provide the parametrized type for this generic.(„ÜÃ
-[
-java:S2259"DA "NullPointerException" could be thrown; "aClass" is nullable here.(ÿùËƒ
-P
-java:S1161Z":Add the "@Override" annotation above this method signature(ÿó§
-V
-java:S1161Â":Add the "@Override" annotation above this method signature(¸©Éúÿÿÿÿ
-h
-java:S3776|"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(½¨Üı
-J
-java:S3740+"/Provide the parametrized type for this generic.(œğÌ¬ûÿÿÿÿ
-?
-java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+H
+java:S3740"/Provide the parametrized type for this generic.(œğÌ¬ûÿÿÿÿ
+N
+java:S1161":Add the "@Override" annotation above this method signature(¤ë¿²
+C
+java:S3740"/Provide the parametrized type for this generic.(ØãÉ
+S
+java:S1161":Add the "@Override" annotation above this method signature(¸©Éúÿÿÿÿ
+f
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(½¨Üı
+<
+java:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+N
+java:S1161":Add the "@Override" annotation above this method signature(ÿó§
+e
+java:S1192"RDefine a constant instead of duplicating this literal "sqlSessionFactory" 3 times.(ÒèÁU
+C
+java:S3740"/Provide the parametrized type for this generic.(„ÜÃ
+S
+java:S1161":Add the "@Override" annotation above this method signature(‘£ß—ûÿÿÿÿ
+X
+java:S2259"DA "NullPointerException" could be thrown; "aClass" is nullable here.(ÿùËƒ

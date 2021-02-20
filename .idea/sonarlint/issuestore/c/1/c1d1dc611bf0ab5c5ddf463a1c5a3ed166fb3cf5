@@ -1,38 +1,38 @@
 
-B
-java:S1452Š"&Remove usage of generic wildcard type.(¢æ¥æüÿÿÿÿ
-T
-java:S3878º"8Remove this array creation and simply pass the elements.(œ©ÓÂþÿÿÿÿ
-Q	java:S110*"<This class has 6 parents which is greater than 5 authorized.(Š¼½ñ
-E
-java:S3740Ñ"/Provide the parametrized type for this generic.(üÇ†s
-r
-java:S1488y"\Immediately return this expression instead of assigning it to the temporary variable "info".(Ø¾Â°
-W
-java:S1128"<Remove this unused import 'java.lang.annotation.Annotation'.(¦Ÿàáûÿÿÿÿ
-V
-java:S1161Å":Add the "@Override" annotation above this method signature(ž«ßùÿÿÿÿ
-J
-java:S1481€".Remove this unused "condition" local variable.(ÕÁÇÞüÿÿÿÿ
+1
+java:S2326*"T is not used in the class.(Š¼½ñ
 E
 java:S1905È".Remove this unnecessary cast to "CrossOrigin".(Î‹ôÎ
 E
-java:S1905Á")Remove this unnecessary cast to "String".(øùó¬üÿÿÿÿ
-\
-java:S1128"FRemove this unused import 'org.springframework.core.annotation.Order'.(ÖŽ¨æ
-—
-java:S11863"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(º½€ú
-1
-java:S2326*"T is not used in the class.(Š¼½ñ
-Y
-java:S1854€"=Remove this useless assignment to local variable "condition".(ÕÁÇÞüÿÿÿÿ
-G
-java:S1905"1Remove this unnecessary cast to "RequestMapping".(¤÷šÒ
-=
-java:S1452…"&Remove usage of generic wildcard type.(ûç‰Ó
-J
-java:S1905É".Remove this unnecessary cast to "CrossOrigin".(¢µªëüÿÿÿÿ
-Q
-java:S1117Í":Rename "config" which hides the field declared at line 49.(¥Áòª
+java:S3740Ñ"/Provide the parametrized type for this generic.(üÇ†s
 i
 java:S3776Ý"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Ò®õ
+\
+java:S1128"FRemove this unused import 'org.springframework.core.annotation.Order'.(ÖŽ¨æ
+V
+java:S1161Å":Add the "@Override" annotation above this method signature(ž«ßùÿÿÿÿ
+=
+java:S1452…"&Remove usage of generic wildcard type.(ûç‰Ó
+G
+java:S1905"1Remove this unnecessary cast to "RequestMapping".(¤÷šÒ
+r
+java:S1488y"\Immediately return this expression instead of assigning it to the temporary variable "info".(Ø¾Â°
+T
+java:S3878º"8Remove this array creation and simply pass the elements.(œ©ÓÂþÿÿÿÿ
+J
+java:S1905É".Remove this unnecessary cast to "CrossOrigin".(¢µªëüÿÿÿÿ
+J
+java:S1481€".Remove this unused "condition" local variable.(ÕÁÇÞüÿÿÿÿ
+Y
+java:S1854€"=Remove this useless assignment to local variable "condition".(ÕÁÇÞüÿÿÿÿ
+W
+java:S1128"<Remove this unused import 'java.lang.annotation.Annotation'.(¦Ÿàáûÿÿÿÿ
+B
+java:S1452Š"&Remove usage of generic wildcard type.(¢æ¥æüÿÿÿÿ
+Q	java:S110*"<This class has 6 parents which is greater than 5 authorized.(Š¼½ñ
+E
+java:S1905Á")Remove this unnecessary cast to "String".(øùó¬üÿÿÿÿ
+—
+java:S11863"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(º½€ú
+Q
+java:S1117Í":Rename "config" which hides the field declared at line 49.(¥Áòª
