@@ -91,6 +91,6 @@ pps:
       websocketPath: /pps
   fastdfs:
     enable: true                         #开启自动配置
-    racker_servers: 120.79.204.37:22122  #服务器地址 如果多个 逗号分隔
-    urlPrefix: http://120.79.204.37:10000/ #访问地址前缀 可以为空
+    racker_servers: xx:2  #服务器地址 如果多个 逗号分隔
+    urlPrefix: http:// #访问地址前缀 可以为空
 
