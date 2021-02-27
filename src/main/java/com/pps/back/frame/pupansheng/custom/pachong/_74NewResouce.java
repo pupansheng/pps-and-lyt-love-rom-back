@@ -25,9 +25,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * @time 2021/1/21 17:06
  */
 @Service
-public class _74Resouce implements ResourceCatchService, InitializingBean {
+public class _74NewResouce implements ResourceCatchService, InitializingBean {
 
-    private String searchUrl="http://www.yc2050.com/search";
+    private String searchUrl="http://www.yingwangtv.com/search";
     private static String playUrl="http://www.yc2050.com";
     @Override
     public String getVideoUrl(String url) {
@@ -167,6 +167,6 @@ public class _74Resouce implements ResourceCatchService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        ResourceStategy.register("骑士影院",this);
+        ResourceStategy.register("yingwang",this);
     }
 }

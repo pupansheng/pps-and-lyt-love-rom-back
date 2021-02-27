@@ -4,6 +4,7 @@ import com.pps.back.frame.pupansheng.core.authority.security.mapper.SysUserDao;
 import com.pps.back.frame.pupansheng.core.common.model.Result;
 import com.pps.back.frame.pupansheng.custom.im.entity.ImUser;
 import com.pps.back.frame.pupansheng.custom.im.listener.CustomListener;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/jwt/im")
-public class ImControoller {
+public class ImControoller implements InitializingBean {
 
     @Autowired
     SysUserDao sysUserDao;
@@ -42,6 +43,9 @@ public class ImControoller {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
 
 
+    }
 }
