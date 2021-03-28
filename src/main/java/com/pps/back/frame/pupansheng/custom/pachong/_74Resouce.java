@@ -167,6 +167,6 @@ public class _74Resouce implements ResourceCatchService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        ResourceStategy.register("骑士影院",this);
+     //   ResourceStategy.register("骑士影院",this);
     }
 }

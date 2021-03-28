@@ -172,6 +172,6 @@ public class _aikekeResouce implements ResourceCatchService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        ResourceStategy.register("扛把子影城",this);
+     //   ResourceStategy.register("扛把子影城",this);
     }
 }
