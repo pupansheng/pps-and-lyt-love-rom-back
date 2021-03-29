@@ -21,8 +21,7 @@ public class DefaultContentTypeTextHtmlOperation implements HttpRequstOperation 
         String HTML= null;
         try {
             MediaType contentType = response.getHeaders().getContentType();
-            InputStream body = response.getBody();
-            byte[] bytes = IOUtils.toByteArray(body);
+            byte[] bytes = encode(response);
             Charset charset = contentType.getCharset();
             if(charset==null){
                 charset=Charset.forName("utf-8");

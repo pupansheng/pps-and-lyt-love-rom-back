@@ -1,6 +1,25 @@
 package com.pps.back.frame.pupansheng.core.http;
 
-import com.alibaba.fastjson.JSON;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestTemplate;
+
 import com.pps.back.frame.pupansheng.core.http.annoation.HttpHeader;
 import com.pps.back.frame.pupansheng.core.http.annoation.HttpMapper;
 import com.pps.back.frame.pupansheng.core.http.annoation.HttpMethod;
@@ -8,28 +27,8 @@ import com.pps.back.frame.pupansheng.core.http.annoation.HttpParam;
 import com.pps.back.frame.pupansheng.core.http.model.PostType;
 import com.pps.back.frame.pupansheng.core.http.strategy.HttpRequstOperation;
 import com.pps.back.frame.pupansheng.core.http.strategy.HttpStrategyFactory;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.builder.BuilderException;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author
@@ -44,7 +43,7 @@ public class HttpInvocationHandler implements InvocationHandler {
     private Class mapper;
     private HttpMapper httpMapper;
     private static final String URL_CONCAT="/";
-    public HttpInvocationHandler(Class mapper,BeanFactory beanFactory){
+    public HttpInvocationHandler(Class mapper, BeanFactory beanFactory){
         this.mapper=mapper;
         this.httpMapper= (HttpMapper) mapper.getAnnotation(HttpMapper.class);
         this.beanFactory=beanFactory;

@@ -19,9 +19,9 @@ public class DefaultContentTypeForJsonOperation implements HttpRequstOperation {
     public Object extractData(ClientHttpResponse response, Class returnType) {
 
         MediaType contentType = response.getHeaders().getContentType();
-        byte [] bytes= new byte[0];
+        byte [] bytes= null;
         try {
-            bytes = IOUtils.toByteArray(response.getBody());
+            bytes =encode(response);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
