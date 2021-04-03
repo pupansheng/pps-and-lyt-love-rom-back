@@ -33,17 +33,7 @@ public class SearchPage  {
 
     public static void main(String[] args) {
 
-        ResourceCatchService resourceCatchService=new _aikekeResouce();
-        List<SearchVideo> t = resourceCatchService.getSearchResult("盗梦空间");
-        for (SearchVideo searchVideo:t){
-            String link = searchVideo.getLink();
-            List<PlayLink> playLinks = resourceCatchService.videoResource(link);
-            playLinks.stream().forEach(p->{
-                String videoUrl = resourceCatchService.getVideoUrl(p.getUrl());
-                System.out.println(videoUrl);
-            });
-        }
-        System.out.println(t);
+
 
 
     }

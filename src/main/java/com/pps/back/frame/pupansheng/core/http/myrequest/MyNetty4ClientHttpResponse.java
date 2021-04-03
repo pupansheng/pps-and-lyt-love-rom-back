@@ -2,10 +2,9 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.custom.pachong.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest;
 
 import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpResponse;
 import org.springframework.http.HttpHeaders;

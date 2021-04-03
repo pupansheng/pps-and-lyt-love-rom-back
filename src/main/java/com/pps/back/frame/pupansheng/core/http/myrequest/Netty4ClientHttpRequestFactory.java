@@ -2,7 +2,7 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.custom.pachong.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelConfig;
@@ -15,6 +15,7 @@ import io.netty.channel.socket.SocketChannelConfig;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -60,6 +61,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 
     private int readTimeout = -1;
 
+    private HttpVersion httpVersion=HttpVersion.HTTP_1_0;
     @Nullable
     private volatile Bootstrap bootstrap;
 
@@ -86,7 +88,10 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
         this.eventLoopGroup = eventLoopGroup;
         this.defaultEventLoopGroup = false;
     }
-
+    public Netty4ClientHttpRequestFactory(HttpVersion httpVersion) {
+        this();
+        this.httpVersion=httpVersion;
+    }
 
     /**
      * Set the default maximum response size.
@@ -154,7 +159,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
     }
 
     private MyNetty4ClientHttpRequest createRequestInternal(URI uri, HttpMethod httpMethod) {
-        return new MyNetty4ClientHttpRequest(getBootstrap(uri), uri, httpMethod);
+        return new MyNetty4ClientHttpRequest(getBootstrap(uri), uri, httpMethod,httpVersion);
     }
 
     private Bootstrap getBootstrap(URI uri) {

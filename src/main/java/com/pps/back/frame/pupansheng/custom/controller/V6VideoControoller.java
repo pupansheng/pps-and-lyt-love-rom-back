@@ -9,6 +9,7 @@ import com.pps.back.frame.pupansheng.custom.pachong.HtmlAnaly;
 import com.pps.back.frame.pupansheng.custom.pachong.ResourceCatchService;
 import com.pps.back.frame.pupansheng.custom.pachong.entity.ResourceStategy;
 import com.pps.back.frame.pupansheng.custom.pachong.entity.SearchVideo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/jwt/v6")
+@Slf4j
 public class V6VideoControoller extends BaseController {
 
     @Autowired
@@ -54,8 +56,9 @@ public class V6VideoControoller extends BaseController {
         return Result.ok(resourceCatchService.videoResource(link));
 
     }
+
     @PostMapping("/getHttpLink")
-    public Result delete(@RequestBody JSONObject jsonObject){
+    public Result delete(@RequestBody JSONObject jsonObject) {
         ResourceCatchService resourceCatchService = ResourceStategy.get(jsonObject.getString("source"));
         String resourceId = resourceCatchService.getVideoUrl(jsonObject.getString("resourceId"));
         return Result.ok(resourceId);

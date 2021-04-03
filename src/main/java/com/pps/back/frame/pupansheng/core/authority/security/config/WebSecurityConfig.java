@@ -172,11 +172,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //登陆失败的自定义处理类
                 .failureUrl(mySecurityProperty.getFailureUrl()).failureHandler(new MyAuthentionFailHandler("表单")).and()
                 //登陆退出自定义
-                .logout().logoutUrl(mySecurityProperty.getLogoutUrl()).logoutSuccessHandler(new MyLogoutSuccessHandler()).deleteCookies("JSESSIONID").and()
+                .logout().logoutUrl(mySecurityProperty.getLogoutUrl()).logoutSuccessHandler(new MyLogoutSuccessHandler()).deleteCookies("JSESSIONID").invalidateHttpSession(true).and()
                 //错误处理自定义类 分别为   前者 没有授权  后者权限不足
                 .exceptionHandling().authenticationEntryPoint(new NoAuthenticationEntryPoint()).accessDeniedHandler(new MyAccessDenHandler()).and()
                 //session失效处理自定义类
                 .sessionManagement().invalidSessionStrategy(new MyInvalidSessionStrategy());
+
 
         //自定义的拦截器  用于打印网络请求信息
         if(mySecurityProperty.getOpenRequestLog()) {

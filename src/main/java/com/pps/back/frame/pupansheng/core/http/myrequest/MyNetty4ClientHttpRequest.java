@@ -2,7 +2,7 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.custom.pachong.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBufOutputStream;
@@ -40,12 +40,19 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
 
     private final ByteBufOutputStream body;
 
-
+    private HttpVersion httpVersion;
     public MyNetty4ClientHttpRequest(Bootstrap bootstrap, URI uri, HttpMethod method) {
         this.bootstrap = bootstrap;
         this.uri = uri;
         this.method = method;
         this.body = new ByteBufOutputStream(Unpooled.buffer(1024));
+    }
+    public MyNetty4ClientHttpRequest(Bootstrap bootstrap, URI uri, HttpMethod method,HttpVersion httpVersion) {
+        this.bootstrap = bootstrap;
+        this.uri = uri;
+        this.method = method;
+        this.body = new ByteBufOutputStream(Unpooled.buffer(1024));
+        this.httpVersion=httpVersion;
     }
 
 
@@ -98,8 +105,7 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
                 channel.pipeline().addLast(new RequestExecuteHandler(responseFuture));
                 FullHttpRequest nettyRequest = createFullHttpRequest(headers);
                 channel.writeAndFlush(nettyRequest);
-            }
-            else {
+            } else {
                 responseFuture.setException(future.cause());
             }
         };
@@ -115,15 +121,13 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
         String authority = this.uri.getRawAuthority();
         String path = this.uri.toString().substring(this.uri.toString().indexOf(authority) + authority.length());
         FullHttpRequest nettyRequest = new DefaultFullHttpRequest(
-                HttpVersion.HTTP_1_1, nettyMethod, path, this.body.buffer());
-
+                httpVersion, nettyMethod, path, this.body.buffer());
         nettyRequest.headers().set(HttpHeaders.HOST, this.uri.getHost() + ":" + getPort(uri));
         nettyRequest.headers().set(HttpHeaders.CONNECTION, "close");
         headers.forEach((headerName, headerValues) -> nettyRequest.headers().add(headerName, headerValues));
         if (!nettyRequest.headers().contains(HttpHeaders.CONTENT_LENGTH) && this.body.buffer().readableBytes() > 0) {
             nettyRequest.headers().set(HttpHeaders.CONTENT_LENGTH, this.body.buffer().readableBytes());
         }
-
         return nettyRequest;
     }
 

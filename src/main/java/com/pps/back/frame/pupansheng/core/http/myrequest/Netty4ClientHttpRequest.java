@@ -2,7 +2,7 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.custom.pachong.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -117,10 +117,8 @@ public class Netty4ClientHttpRequest extends AbstractAsyncClientHttpRequest impl
         String authority = this.uri.getRawAuthority();
         String path = this.uri.toString().substring(this.uri.toString().indexOf(authority) + authority.length());
         ByteBuf buffer = this.body.buffer();
-        buffer.retain();
         FullHttpRequest nettyRequest = new DefaultFullHttpRequest(
                 HttpVersion.HTTP_1_0, nettyMethod, path, buffer);
-
         nettyRequest.headers().set(HttpHeaders.HOST, this.uri.getHost() + ":" + getPort(uri));
         nettyRequest.headers().set(HttpHeaders.CONNECTION, "close");
         headers.forEach((headerName, headerValues) -> nettyRequest.headers().add(headerName, headerValues));

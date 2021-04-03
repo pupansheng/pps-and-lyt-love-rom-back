@@ -34,9 +34,12 @@ public class PpsHttpUtilExcute {
     private static final String POST="post";
     private static final String GET="get";
 
+
     private boolean async;
 
     private boolean strict;
+
+    private boolean isDebug;
 
     private Object[] params;
 
@@ -155,6 +158,15 @@ public class PpsHttpUtilExcute {
         return this;
     }
 
+    /**
+     *
+     * @param debug
+     * @return
+     */
+    public PpsHttpUtilExcute setDebug(boolean debug) {
+        this.isDebug = debug;
+        return this;
+    }
     /**
      * 是否严格模式  严格模式：请求不是200响应就会抛出错误
      * @param strict
@@ -328,6 +340,16 @@ public class PpsHttpUtilExcute {
                     @Override
                     public void doWithRequest(ClientHttpRequest request) throws IOException {
                         request.getHeaders().addAll(headers);
+                        if(isDebug){
+                            URI uri = request.getURI();
+                            log.info("网络请求：{}", uri.toString());
+                            String host = uri.getHost();
+                            String scheme = uri.getScheme();
+                            log.info("host:{}", host);
+                            log.info("scheme:{}", scheme);
+                            log.info("header: {}", request.getHeaders().toString());
+                            log.info("---------------");
+                        }
                         finalClientHttpRequestConsumer.accept(request);
                     }
                 }, new ResponseExtractor<Object>() {
@@ -366,6 +388,16 @@ public class PpsHttpUtilExcute {
                 @Override
                 public void doWithRequest(ClientHttpRequest request) throws IOException {
                     request.getHeaders().addAll(headers);
+                    if(isDebug){
+                        URI uri = request.getURI();
+                        log.info("网络请求：{}", uri.toString());
+                        String host = uri.getHost();
+                        String scheme = uri.getScheme();
+                        log.info("host:{}", host);
+                        log.info("scheme:{}", scheme);
+                        log.info("header: {}", request.getHeaders().toString());
+                        log.info("---------------");
+                    }
                     finalClientHttpRequestConsumer.accept(request);
                 }
             }, new ResponseExtractor<Object>() {

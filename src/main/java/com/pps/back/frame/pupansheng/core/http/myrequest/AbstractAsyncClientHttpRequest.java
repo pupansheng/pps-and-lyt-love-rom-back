@@ -2,7 +2,7 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.custom.pachong.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.AsyncClientHttpRequest;
