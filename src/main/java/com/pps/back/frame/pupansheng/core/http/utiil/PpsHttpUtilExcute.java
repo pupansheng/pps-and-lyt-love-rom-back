@@ -400,9 +400,9 @@ public class PpsHttpUtilExcute {
             }, (t) -> {
                 ClientHttpResponse response = (ClientHttpResponse) t;
                 callback.accept(response);
-                PpsHttpUtil.returnClient();
+                PpsHttpUtil.returnClient(restTemplate);
             }, (e) -> {
-                PpsHttpUtil.returnClient();
+                PpsHttpUtil.returnClient(restTemplate);
                 finalCatchCallback.accept(e);
             });
         } else {
@@ -452,7 +452,7 @@ public class PpsHttpUtilExcute {
             } catch (Exception e) {
                 finalCatchCallback.accept(e);
             }finally {
-                PpsHttpUtil.returnClient();
+                PpsHttpUtil.returnClient(restTemplate);
             }
         }
     }

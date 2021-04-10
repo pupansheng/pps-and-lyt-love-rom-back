@@ -49,7 +49,12 @@ public class PpsHttpUtil {
         return  getRestClient();
     }
 
-    public static void returnClient(){
+    public static void returnClient(RestTemplate restTemplate){
+        for (int i = 0; i <BUFF_SIZE ; i++) {
+           if(restTemplate==restTemplates[i]){
+               useD[i].compareAndSet(true,false);
+           }
+        }
         semaphore.release();
     }
 
