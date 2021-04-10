@@ -185,6 +185,6 @@ public class _6vResouce implements ResourceCatchService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-     //   ResourceStategy.register("6v影视",this);
+       ResourceStategy.register("6v影视",this);
     }
 }

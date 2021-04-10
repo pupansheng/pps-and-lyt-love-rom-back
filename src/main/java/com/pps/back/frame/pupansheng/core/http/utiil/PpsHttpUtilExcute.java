@@ -28,6 +28,7 @@ import java.util.function.Consumer;
  * @time 2021/1/21 14:52
  */
 @Slf4j
+@Deprecated
 public class PpsHttpUtilExcute {
 
     private RestTemplate restTemplate;
@@ -218,6 +219,17 @@ public class PpsHttpUtilExcute {
     }
 
     /**
+     *伪装移动端
+     */
+    private boolean mobileClient;
+
+    public PpsHttpUtilExcute setMobileClient(boolean mobieClient) {
+        this.mobileClient=mobieClient;
+        return this;
+    }
+
+
+    /**
      * 自定义重定向时的策略
      * @param _3xxStrategy
      */
@@ -321,9 +333,18 @@ public class PpsHttpUtilExcute {
         if(httpHeadersConsumer==null){
             httpHeadersConsumer=(h)->{
                 defaultOperation.defaultHeaderOperation(h);
+                if(mobileClient){
+                    h.set("user-agent",
+                            "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
+                }
             };
         }else {
             defaultOperation.defaultHeaderOperation(headers);
+            if(mobileClient){
+                headers.set("user-agent",
+                        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
+            }
+
         }
         headers.setContentType(mediaType);
         httpHeadersConsumer.accept(headers);
@@ -379,7 +400,9 @@ public class PpsHttpUtilExcute {
             }, (t) -> {
                 ClientHttpResponse response = (ClientHttpResponse) t;
                 callback.accept(response);
+                PpsHttpUtil.returnClient();
             }, (e) -> {
+                PpsHttpUtil.returnClient();
                 finalCatchCallback.accept(e);
             });
         } else {
@@ -428,6 +451,8 @@ public class PpsHttpUtilExcute {
                 callback.accept(response);
             } catch (Exception e) {
                 finalCatchCallback.accept(e);
+            }finally {
+                PpsHttpUtil.returnClient();
             }
         }
     }

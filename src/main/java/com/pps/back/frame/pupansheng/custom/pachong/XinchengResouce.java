@@ -2,6 +2,7 @@ package com.pps.back.frame.pupansheng.custom.pachong;
 
 import com.alibaba.fastjson.JSON;
 import com.pps.back.frame.pupansheng.core.common.util.RegexUtil;
+import com.pps.back.frame.pupansheng.core.http.myrequest.phantom.PhantomClientHttpResponse;
 import com.pps.back.frame.pupansheng.core.http.strategy.DefaultContentTypeTextHtmlOperation;
 import com.pps.back.frame.pupansheng.core.http.strategy.HttpRequstOperation;
 import com.pps.back.frame.pupansheng.core.http.strategy.HttpStrategyFactory;
@@ -84,11 +85,7 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
                 h.set("user-agent",
                         "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
             }).get((r) -> {
-                MediaType contentType = r.getHeaders().getContentType();
-                HttpRequstOperation operation = HttpStrategyFactory
-                        .getOperation(contentType.toString());
-                Object o = operation.extractData(r, String.class);
-                String html = (String) o;
+                String html =PpsHttpUtil.autoTransfor2String(r);
                 String oneContentByStartAndEnd = RegexUtil
                         .findOneContentByStartAndEnd("var url = '", "'", html);
                 re.set(oneContentByStartAndEnd);
@@ -114,7 +111,7 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
         log.info("encode="+encode);
         log.info("newUrl="+searchUrlNew);
         log.info("------------------------------------------------------------------------------");
-        PpsHttpUtil.createSyncClient().setHttpHeadersConsumer(h->{
+        PpsHttpUtil.createPhantomClient(false).setHttpHeadersConsumer(h->{
 
             h.set("Cookie","UM_distinctid=1787846854c52e-0a74ecc5fd8667e-5771031-144000-1787846854d339; history=%5B%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%89%B9%E6%94%BB%E9%98%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-08-02%2F201908021564713257.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengtegongdui-1-1%2F%22%2C%22part%22%3A%22HD%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E5%9B%9E%E5%A4%8D%E6%9C%AF%E5%A3%AB%E7%9A%84%E9%87%8D%E6%9D%A5%E4%BA%BA%E7%94%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-01-14%2F202101141610594535.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fhuifushushidezhonglairensheng-1-1%2F%22%2C%22part%22%3A%22%E7%AC%AC01%E9%9B%86%22%7D%2C%7B%22name%22%3A%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%9D%8E%E7%84%95%E8%8B%B1%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-02-14%2F202102141613271201.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fnihaolihuanying-1-1%2F%22%2C%22part%22%3A%22HC%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%A9%BA%E9%97%B4%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-05-23%2F201905231558593845.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengkongjian-1-1%2F%22%2C%22part%22%3A%22HD%E8%8B%B1%E8%AF%AD%22%7D%5D; CNZZDATA1279689094=1647349218-1616920571-null%7C1617084380; Hm_lvt_59c54c91990f5e3be7496d6a6d9f43e4=1616925591,1617084584");
             h.set("user-agent",
@@ -123,10 +120,7 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
                 .set_3xxStrategy((r, p) -> {
                     return p;
                 }).get((r) -> {
-                    Object o = HttpStrategyFactory
-                            .getOperation(r.getHeaders().getContentType().toString())
-                            .extractData(r, String.class);
-                    String h = (String) o;
+            String h =PpsHttpUtil.autoTransfor2String(r);
             log.info(h);
             log.info("------------------------------------------------------------------------------");
                     String uls = RegexUtil.findOneContentByStartAndEnd(
@@ -163,17 +157,11 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
     @Override
     public List<PlayLink> videoResource(String link) {
         List<PlayLink> playLinks = new ArrayList<>();
-        PpsHttpUtil.createSyncClient().setUrl(link).setHttpHeadersConsumer((h) -> {
+        PpsHttpUtil.createPhantomClient(false).setUrl(link).setHttpHeadersConsumer((h) -> {
             h.set("Referer", playUrl);
-            h.set("Cookie","UM_distinctid=1787846854c52e-0a74ecc5fd877e-5771031-144000-1787846854d339; history=%5B%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%89%B9%E6%94%BB%E9%98%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-08-02%2F201908021564713257.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengtegongdui-1-1%2F%22%2C%22part%22%3A%22HD%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E5%9B%9E%E5%A4%8D%E6%9C%AF%E5%A3%AB%E7%9A%84%E9%87%8D%E6%9D%A5%E4%BA%BA%E7%94%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-01-14%2F202101141610594535.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fhuifushushidezhonglairensheng-1-1%2F%22%2C%22part%22%3A%22%E7%AC%AC01%E9%9B%86%22%7D%2C%7B%22name%22%3A%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%9D%8E%E7%84%95%E8%8B%B1%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-02-14%2F202102141613271201.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fnihaolihuanying-1-1%2F%22%2C%22part%22%3A%22HC%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%A9%BA%E9%97%B4%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-05-23%2F201905231558593845.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengkongjian-1-1%2F%22%2C%22part%22%3A%22HD%E8%8B%B1%E8%AF%AD%22%7D%5D; CNZZDATA1279689094=1647349218-1616920571-null%7C1617084380; Hm_lvt_59c54c91990f5e3be7496d6a6d9f43e4=1616925591,1617084584");
-            h.set("user-agent",
-                    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
         }).setStrict(true).get((r) -> {
-            MediaType contentType = r.getHeaders().getContentType();
-            HttpRequstOperation operation = HttpStrategyFactory
-                    .getOperation(contentType.toString());
-            Object o = operation.extractData(r, String.class);
-            String html = (String) o;
+
+            String html = PpsHttpUtil.autoTransfor2String(r);
             String res = RegexUtil.findOneContentByStartAndEnd(
                     "<ul class=\"myui-content__list playlist clearfix\" id=\"playlist\">", "</ul>",
                     html);
@@ -193,17 +181,11 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
         playLinks.forEach(p -> {
 
             String url = p.getUrl();
-            PpsHttpUtil.createSyncClient().setUrl(url).setHttpHeadersConsumer(h -> {
+            PpsHttpUtil.createPhantomClient(false).setUrl(url).setMobileClient(true).setHttpHeadersConsumer(h -> {
                 h.set("Referer", playUrl);
-                h.set("Cookie","UM_distinctid=1787846854c52e-0a74ecc5fd877e-5771031-144000-1787846854d339; history=%5B%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%89%B9%E6%94%BB%E9%98%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-08-02%2F201908021564713257.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengtegongdui-1-1%2F%22%2C%22part%22%3A%22HD%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E5%9B%9E%E5%A4%8D%E6%9C%AF%E5%A3%AB%E7%9A%84%E9%87%8D%E6%9D%A5%E4%BA%BA%E7%94%9F%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-01-14%2F202101141610594535.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fhuifushushidezhonglairensheng-1-1%2F%22%2C%22part%22%3A%22%E7%AC%AC01%E9%9B%86%22%7D%2C%7B%22name%22%3A%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%9D%8E%E7%84%95%E8%8B%B1%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2021-02-14%2F202102141613271201.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fnihaolihuanying-1-1%2F%22%2C%22part%22%3A%22HC%E9%AB%98%E6%B8%85%22%7D%2C%7B%22name%22%3A%22%E7%9B%97%E6%A2%A6%E7%A9%BA%E9%97%B4%22%2C%22pic%22%3A%22https%3A%2F%2Fimg.sokoyo-rj.com%2Ftuku%2Fupload%2Fvod%2F2019-05-23%2F201905231558593845.jpg%22%2C%22link%22%3A%22%2Fvodplay%2Fdaomengkongjian-1-1%2F%22%2C%22part%22%3A%22HD%E8%8B%B1%E8%AF%AD%22%7D%5D; CNZZDATA1279689094=1647349218-1616920571-null%7C1617084380; Hm_lvt_59c54c91990f5e3be7496d6a6d9f43e4=1616925591,1617084584");
-                h.set("user-agent",
-                        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
             }).get((r) -> {
-                MediaType contentType = r.getHeaders().getContentType();
-                HttpRequstOperation operation = HttpStrategyFactory
-                        .getOperation(contentType.toString());
-                Object o = operation.extractData(r, String.class);
-                String html = (String) o;
+
+                String html =PpsHttpUtil.autoTransfor2String(r);
                 String data = RegexUtil.findOneContentByStartAndEnd("var player_data=", "<", html);
                 Map map = JSON.parseObject(data, Map.class);
                 String https = (String) map.get("url");
@@ -223,6 +205,7 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
     }
 
     public String getScript(String url) {
+
         AtomicReference<String> hr = new AtomicReference<>();
         PpsHttpUtil.createSyncClient().setUrl(url).setHttpHeadersConsumer(h -> {
             h.set("Referer", playUrl);
@@ -230,13 +213,11 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
             h.set("user-agent",
                     "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/88.0.4324.96");
         }).get((r) -> {
-            HttpRequstOperation operation = new DefaultContentTypeTextHtmlOperation();
-            Object o = operation.extractData(r, String.class);
-            String html = (String) o;
+            String html =PpsHttpUtil.autoTransfor2String(r);
             hr.set(html);
         });
-
         return hr.get();
+
     }
 
     @Override
@@ -256,6 +237,7 @@ public class XinchengResouce implements ResourceCatchService, InitializingBean {
             System.out.println("----------------------");
         });
 
+        System.out.println("");
 
     }
 }

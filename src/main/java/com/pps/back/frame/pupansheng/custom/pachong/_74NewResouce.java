@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author
- * @discription; 琪琪电影网爬取资源
+ * @discription; 琪琪电影网爬取资源 已失效
  * @time 2021/1/21 17:06
  */
 @Service

@@ -2,9 +2,10 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.core.http.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest.netty;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -17,7 +18,8 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpVersion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.client.*;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.SettableListenableFuture;
 
@@ -30,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  * @author pupansheng, 2021/3/29
  * @version OPRA v1.0
  */
-public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest implements ClientHttpRequest {
+public class Netty4ClientHttpRequest extends AbstractAsyncClientHttpRequest implements ClientHttpRequest {
 
     private final Bootstrap bootstrap;
 
@@ -40,19 +42,12 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
 
     private final ByteBufOutputStream body;
 
-    private HttpVersion httpVersion;
-    public MyNetty4ClientHttpRequest(Bootstrap bootstrap, URI uri, HttpMethod method) {
+
+    public Netty4ClientHttpRequest(Bootstrap bootstrap, URI uri, HttpMethod method) {
         this.bootstrap = bootstrap;
         this.uri = uri;
         this.method = method;
         this.body = new ByteBufOutputStream(Unpooled.buffer(1024));
-    }
-    public MyNetty4ClientHttpRequest(Bootstrap bootstrap, URI uri, HttpMethod method,HttpVersion httpVersion) {
-        this.bootstrap = bootstrap;
-        this.uri = uri;
-        this.method = method;
-        this.body = new ByteBufOutputStream(Unpooled.buffer(1024));
-        this.httpVersion=httpVersion;
     }
 
 
@@ -105,7 +100,8 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
                 channel.pipeline().addLast(new RequestExecuteHandler(responseFuture));
                 FullHttpRequest nettyRequest = createFullHttpRequest(headers);
                 channel.writeAndFlush(nettyRequest);
-            } else {
+            }
+            else {
                 responseFuture.setException(future.cause());
             }
         };
@@ -120,14 +116,16 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
 
         String authority = this.uri.getRawAuthority();
         String path = this.uri.toString().substring(this.uri.toString().indexOf(authority) + authority.length());
+        ByteBuf buffer = this.body.buffer();
         FullHttpRequest nettyRequest = new DefaultFullHttpRequest(
-                httpVersion, nettyMethod, path, this.body.buffer());
+                HttpVersion.HTTP_1_0, nettyMethod, path, buffer);
         nettyRequest.headers().set(HttpHeaders.HOST, this.uri.getHost() + ":" + getPort(uri));
         nettyRequest.headers().set(HttpHeaders.CONNECTION, "close");
         headers.forEach((headerName, headerValues) -> nettyRequest.headers().add(headerName, headerValues));
-        if (!nettyRequest.headers().contains(HttpHeaders.CONTENT_LENGTH) && this.body.buffer().readableBytes() > 0) {
-            nettyRequest.headers().set(HttpHeaders.CONTENT_LENGTH, this.body.buffer().readableBytes());
+        if (!nettyRequest.headers().contains(HttpHeaders.CONTENT_LENGTH) && buffer.readableBytes() > 0) {
+            nettyRequest.headers().set(HttpHeaders.CONTENT_LENGTH, buffer.readableBytes());
         }
+
         return nettyRequest;
     }
 
@@ -168,4 +166,3 @@ public class MyNetty4ClientHttpRequest  extends AbstractAsyncClientHttpRequest i
     }
 
 }
-

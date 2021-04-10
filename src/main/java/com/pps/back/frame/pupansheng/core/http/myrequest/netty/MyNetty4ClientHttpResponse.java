@@ -2,7 +2,7 @@
  * Copyright (c) ACCA Corp.
  * All Rights Reserved.
  */
-package com.pps.back.frame.pupansheng.core.http.myrequest;
+package com.pps.back.frame.pupansheng.core.http.myrequest.netty;
 
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;

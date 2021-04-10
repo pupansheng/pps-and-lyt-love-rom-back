@@ -33,7 +33,7 @@ public class SeleiumTest {
         //驱动支持
         dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,"D:\\dev_softwares\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
         //创建无界面浏览器对象
-        String t1="https://tx.79da.com/m3u8.php?url=https://meiju3.qfxmj.com/20181209/EhsjhGQ4/index.m3u8";
+        String t1="http://www.i63.com.cn/vodsearch/%25E7%259B%2597%25E6%25A2%25A6-------------/";
         PhantomJSDriver driver = new PhantomJSDriver(dcaps);
 
         driver.manage().window().maximize();
@@ -41,10 +41,9 @@ public class SeleiumTest {
 
         driver.get(t1);
         String pageSource = driver.getPageSource();
+        System.out.println(pageSource);
 
-        WebElement video = driver.findElementByTagName("video");
-        String text = video.getText();
-        System.out.println(text);
+
 
 
     }
