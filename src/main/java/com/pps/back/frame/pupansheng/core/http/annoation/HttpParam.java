@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于用在htp请求的参数上 基本类型必须携带  其他类型的name 将不会起作用
+ * 用于用在http请求的参数上 基本类型必须携带  其他类型的name 将不会起作用
  */
 @Target({ElementType.PARAMETER,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

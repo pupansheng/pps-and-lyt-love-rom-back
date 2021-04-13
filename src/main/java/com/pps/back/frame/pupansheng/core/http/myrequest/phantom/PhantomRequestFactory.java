@@ -4,6 +4,7 @@
  */
 package com.pps.back.frame.pupansheng.core.http.myrequest.phantom;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.http.HttpMethod;
@@ -18,10 +19,25 @@ import java.util.function.Consumer;
  * @author Pu PanSheng, 2021/4/4
  * @version OPRA v1.0
  */
+@Slf4j
 public class PhantomRequestFactory implements ClientHttpRequestFactory {
 
-    private   String path="/usr/bin/phantomjs";//"D:\\dev_softwares\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe";
+    private   String path="";
+    public void setPhantomjsLocation(String path){
+        this.path=path;
+    }
+    {
+        String winLocation="D:\\dev_softwares\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe";;
+        String linLocation="/usr/bin/phantomjs";
+        String os = System.getProperty("os.name");
+        if(os.toLowerCase().startsWith("win")) {
+            path=winLocation;
+        }else {
+            path=linLocation;
+        }
 
+        log.info("phantonjs默认的驱动位置："+path);
+    }
     Consumer<DesiredCapabilities> defaultConfig;
     public PhantomRequestFactory() {
         defaultConfig=(dcaps)->{

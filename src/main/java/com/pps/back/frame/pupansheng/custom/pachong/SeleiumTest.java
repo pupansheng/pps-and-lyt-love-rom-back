@@ -6,6 +6,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class SeleiumTest {
 
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String args[]) throws InterruptedException, IOException {
 
 
         //设置必要参数
@@ -41,7 +42,14 @@ public class SeleiumTest {
 
         driver.get(t1);
         String pageSource = driver.getPageSource();
+
         System.out.println(pageSource);
+
+        System.in.read();
+
+
+        driver.close();
+        driver.quit();
 
 
 
